@@ -3,9 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.jenkins-ci.plugins</groupId>
-  <artifactId>spinnaker-client</artifactId>
-  <version>1.0</version>
+  <artifactId>spinnaker-parent</artifactId>
+  <version>1.21.0</version>
   <packaging>pom</packaging>
   <name>spinnaker plugin parent</name>
 
+  <modules>
+    <module>api</module>
+  </modules>
 </project>
