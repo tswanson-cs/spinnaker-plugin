@@ -25,3 +25,4 @@ hs_err_pid*
 # ignore generated dirs
 target
 api
+work

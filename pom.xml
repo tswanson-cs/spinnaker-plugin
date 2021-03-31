@@ -10,15 +10,14 @@
   </licenses>
 
   <groupId>io.jenkins-ci.plugins</groupId>
-  <artifactId>spinnaker-plugin</artifactId>
-  <version>${revision}</version>
+  <artifactId>spinnaker-generator</artifactId>
+  <version>${spin-gate.version}</version>
   <packaging>pom</packaging>
   <name>Spinnaker API client</name>
   <url>https://github.com/tswanson-cs/spinnaker-plugin</url>
 
   <properties>
-    <!-- Tie version to spin cli -->
-    <revision>1.21.0</revision>
+    <!-- WARNING do not define ${revsion} as we use the fact its undefined for codegen step-->
     <!-- Versions -->
     <download-maven-plugin.version>1.6.1</download-maven-plugin.version>
     <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
@@ -27,9 +26,10 @@
     <!--Vars-->
     <spinnaker-parent.directory>${project.basedir}/spinnaker-parent</spinnaker-parent.directory>
     <spinnaker-api.directory>${spinnaker-parent.directory}/api</spinnaker-api.directory>
-    <!-- URL to get the swagger.yaml dynamic -->
-    <spin-gate-api.url>https://raw.githubusercontent.com/spinnaker/spin/version-${revision}/gateapi/api/swagger.yaml</spin-gate-api.url>
+    <!-- spin gate cli -->
+    <spin-gate-api.url>https://raw.githubusercontent.com/spinnaker/spin/version-${spin-gate.version}/gateapi/api/swagger.yaml</spin-gate-api.url>
     <spin-gate-api.yaml>${project.build.directory}/swagger.yaml</spin-gate-api.yaml>
+    <spin-gate.version>1.21.0</spin-gate.version>
   </properties>
 
   <build> 
@@ -70,10 +70,10 @@
               <configOptions>
                 <parentArtifactId>spinnaker-parent</parentArtifactId>
                 <parentGroupId>${groupId}</parentGroupId>
-                <parentVersion>${version}</parentVersion>
+                <parentVersion>${spin-gate.version}</parentVersion>
                 <groupId>io.jenkins-ci.plugins</groupId>
                 <artifactId>api</artifactId>
-                <artifactVersion>${version}</artifactVersion>
+                <artifactVersion>${spin-gate.version}</artifactVersion>
               </configOptions>
       	    </configuration>
       	  </execution>
