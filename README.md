@@ -1,34 +1,47 @@
-# spinnaker
 
-[![Build Status](https://ci.jenkins.io/job/Plugins/job/spinnaker-plugin/job/master/badge/icon)](https://ci.jenkins.io/job/Plugins/job/spinnaker-plugin/job/master/)
-[![Contributors](https://img.shields.io/github/contributors/jenkinsci/spinnaker-plugin.svg)](https://github.com/jenkinsci/spinnaker-plugin/graphs/contributors)
-[![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/spinnaker.svg)](https://plugins.jenkins.io/spinnaker)
-[![GitHub release](https://img.shields.io/github/release/jenkinsci/spinnaker-plugin.svg?label=changelog)](https://github.com/jenkinsci/spinnaker-plugin/releases/latest)
-[![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/spinnaker.svg?color=blue)](https://plugins.jenkins.io/spinnaker)
+::: warning
+This plugin is still a work in progress.  Would be open to any suggestions or discusions 😸
 
-## Introduction
-
-TODO Describe what your plugin does here
+# Spinnaker
+The Spinnaker plugin is an api interface into controlling spinnaker.
 
 ## Getting started
 
-TODO Tell users how to configure your plugin here, include screenshots, pipeline examples and 
-configuration-as-code examples.
+### Configuring spin-gate location 
++ Setup the global configuartion for the spin-gate path.
+
+> The spinnaker spin-gate url needs to be set in the jenkins global configuration.  Depending how you deploy spinnaker this will change.  The path set here will be used in all subsequent api calls.
+![image](https://user-images.githubusercontent.com/9701912/113105163-2376dd80-91b6-11eb-847a-42da2f9e081d.png)
+
+### pipelineController
++ The pipeline controller build step used to configure and create pipelines in spinnaker.
+ 
+> Pipelines are defined as a pipeline json file.  This pipeline json matches the syntax that spinnaker uses.  The pipeline json must contain the **`name`** and **`application`** field.
+>> This pipeline is named bar and defined for an application foo.
+>> ```
+>>  {
+>>    "application":"foo"
+>>    "name":"bar"
+>>    "keepWaitingPipelines": false,
+>>    "limitConcurrent": true,
+>>    "spelEvaluator": "v4",
+>>    "stages": [],
+>>    "triggers": []
+>>  }
+>> ```
+> Buildstep can be invoked with the syntax below.
+>> ```pipelineController spinnaker-pipeline.json```
+
+
 
 ## Issues
 
-TODO Decide where you're going to host your issues, the default is Jenkins JIRA, but you can also enable GitHub issues,
-If you use GitHub issues there's no need for this section; else add the following line:
-
-Report issues and enhancements in the [Jenkins issue tracker](https://issues.jenkins-ci.org/).
+Please report issues through github.
 
 ## Contributing
-
-TODO review the default [CONTRIBUTING](https://github.com/jenkinsci/.github/blob/master/CONTRIBUTING.md) file and make sure it is appropriate for your plugin, if not then add your own one adapted from the base file
 
 Refer to our [contribution guidelines](https://github.com/jenkinsci/.github/blob/master/CONTRIBUTING.md)
 
 ## LICENSE
 
 Licensed under MIT, see [LICENSE](LICENSE.md)
-
