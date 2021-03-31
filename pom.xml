@@ -24,8 +24,8 @@
     <maven-invoker-plugin.version>3.2.2</maven-invoker-plugin.version>
     <openapi-generator-maven-plugin.version>5.0.1</openapi-generator-maven-plugin.version>
     <!--Vars-->
-    <spinnaker-parent.directory>${project.basedir}/spinnaker-parent</spinnaker-parent.directory>
-    <spinnaker-api.directory>${spinnaker-parent.directory}/api</spinnaker-api.directory>
+    <spinnaker-parent.directory>${project.basedir}/spinnaker-parent/</spinnaker-parent.directory>
+    <spinnaker-api.directory>${spinnaker-parent.directory}/api/</spinnaker-api.directory>
     <!-- spin gate cli -->
     <spin-gate-api.url>https://raw.githubusercontent.com/spinnaker/spin/version-${spin-gate.version}/gateapi/api/swagger.yaml</spin-gate-api.url>
     <spin-gate-api.yaml>${project.build.directory}/swagger.yaml</spin-gate-api.yaml>
@@ -103,9 +103,15 @@
               <directory>${spinnaker-api.directory}</directory>
             </fileset>
             <fileset>
-              <directory>${spinnaker-parent.directory}</directory>
+              <directory>${spinnaker-parent.directory}/target</directory>
               <includes>
-                <include>**/target</include>
+                <include>**</include>
+              </includes>
+            </fileset>
+            <fileset>                                                     
+              <directory>${spinnaker-parent.directory}/spinnaker/target</directory>
+              <includes>
+                <include>**</include>
               </includes>
             </fileset>
           </filesets>
