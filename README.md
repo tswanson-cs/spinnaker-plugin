@@ -5,7 +5,7 @@ This plugin is still a work in progress.  Would be open to any suggestions or di
 # Spinnaker
 The Spinnaker plugin is an api interface into controlling spinnaker.
 
-## Getting started
+## Getting Started
 
 ### Configuring spin-gate location 
 + Setup the global configuartion for the spin-gate path.
@@ -16,23 +16,62 @@ The Spinnaker plugin is an api interface into controlling spinnaker.
 ### pipelineController
 + The pipeline controller build step used to configure and create pipelines in spinnaker.
  
-> Pipelines are defined as a pipeline json file.  This pipeline json matches the syntax that spinnaker uses.  The pipeline json must contain the **`name`** and **`application`** field.
->> This pipeline is named bar and defined for an application foo.
->> ```
->>  {
->>    "application":"foo"
->>    "name":"bar"
->>    "keepWaitingPipelines": false,
->>    "limitConcurrent": true,
->>    "spelEvaluator": "v4",
->>    "stages": [],
->>    "triggers": []
->>  }
->> ```
+> Pipelines are defined as a pipeline json file.  This pipeline json matches the syntax that spinnaker uses inside spin deck.  The pipeline json must contain the **`name`** and **`application`** keys.
+> 
+>>  **For example:**
+>>> This pipeline is named bar and defined for an application foo.
+>>> ```
+>>>  {
+>>>   "application":"foo"
+>>>    "name":"bar"
+>>>    "keepWaitingPipelines": false,
+>>>    "limitConcurrent": true,
+>>>    "spelEvaluator": "v4",
+>>>    "stages": [],
+>>>    "triggers": []
+>>>  }
+>>> ```
 > Buildstep can be invoked with the syntax below.
 >> ```pipelineController spinnaker-pipeline.json```
 
+## For Developers
+The project project has multiple modules.
 
++ **spinnaker-generator**
+  > Top level wrapper module that contains the maven source for generating api inside spinnaker-parent.
++ **spinnaker-parent**
+  > Parent of multi-module maven project.
+  + **api** *(generated)*
+    > [openapi](https://openapi-generator.tech/) generated client for spinnaker.
+  + **spinnaker**
+    > Contains source for jenkins plugins.
+    + **Plugins**
+      + **PipelineController** [Builder](https://javadoc.jenkins.io/hudson/tasks/Builder.html)
+        > Update and create pipelines for an application.
+      + **Config** [GlobalConfiguration](https://javadoc.jenkins.io/jenkins/model/GlobalConfiguration.html)
+        > Global spinnaker configuration
+## Building and running
+
+At a minimum you will need a JVM and Maven installed.
+
+### Build everything (from root directory)
+Generates and Builds all maven modules (run this the first time you check things out, at least)
+
+```
+$ mvn clean install
+```
+
+### Running spinnaker-plugin
+
+```
+$ mvn -f spinnaker-parent/spinnaker/pom.xml hpi:run
+```
+
+### Adding features
+Once the **api** is generated `mvn test` can be run inside the **spinnaker-parent** module.
+This will build and test the **api** and **spinnaker** modules without regenerating sources. 
+
+Then open http://localhost:8080/jenkins/
 
 ## Issues
 
@@ -41,6 +80,17 @@ Please report issues through github.
 ## Contributing
 
 Refer to our [contribution guidelines](https://github.com/jenkinsci/.github/blob/master/CONTRIBUTING.md)
+
+**If you write code without:**
+  - Tests
+  - Comments
+  - Pride
+   
+These projects would be more suitable for you
+  - [python-code-disasters](https://github.com/sobolevn/python-code-disasters)
+  - [spaghetti](https://www.allrecipes.com/recipe/158140/spaghetti-sauce-with-ground-beef/)
+  - [cheese-quest](https://github.com/EvanQuan/cheese-quest)
+  - [windows 8](https://en.wikipedia.org/wiki/Windows_8)
 
 ## LICENSE
 
