@@ -66,12 +66,12 @@ $ mvn clean install
 ```
 $ mvn -f spinnaker-parent/spinnaker/pom.xml hpi:run
 ```
+Then open http://localhost:8080/jenkins/
 
 ### Adding features
 Once the **api** is generated `mvn test` can be run inside the **spinnaker-parent** module.
 This will build and test the **api** and **spinnaker** modules without regenerating sources. 
 
-Then open http://localhost:8080/jenkins/
 
 ## Issues
 
