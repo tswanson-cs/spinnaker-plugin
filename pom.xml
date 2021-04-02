@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+
+  <groupId>io.jenkins-ci.plugins</groupId>
+  <artifactId>spinnaker-generator</artifactId>
+  <version>${spin-gate.version}</version>
+  <packaging>pom</packaging>
+  <name>Spinnaker API client</name>
+  <url>https://github.com/tswanson-cs/spinnaker-plugin</url>
+
+  <properties>
+    <!-- WARNING do not define ${revsion} as we use the fact its undefined for codegen step-->
+    <!-- Versions -->
+    <download-maven-plugin.version>1.6.1</download-maven-plugin.version>
+    <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+    <maven-invoker-plugin.version>3.2.2</maven-invoker-plugin.version>
+    <openapi-generator-maven-plugin.version>5.0.1</openapi-generator-maven-plugin.version>
+    <!--Vars-->
+    <spinnaker-parent.directory>${project.basedir}/spinnaker-parent/</spinnaker-parent.directory>
+    <spinnaker-api.directory>${spinnaker-parent.directory}/api/</spinnaker-api.directory>
+    <!-- spin gate cli -->
+    <spin-gate-api.url>https://raw.githubusercontent.com/spinnaker/spin/version-${spin-gate.version}/gateapi/api/swagger.yaml</spin-gate-api.url>
+    <spin-gate-api.yaml>${project.build.directory}/swagger.yaml</spin-gate-api.yaml>
+    <spin-gate.version>1.21.0</spin-gate.version>
+  </properties>
+
+  <build> 
+    <plugins>
+  	  <plugin>
+  	    <groupId>com.googlecode.maven-download-plugin</groupId>
+  	    <artifactId>download-maven-plugin</artifactId>
+        <version>${download-maven-plugin.version}</version>
+  	    <executions>
+  	      <execution>
+  	        <phase>generate-sources</phase>
+  	        <goals>
+  	          <goal>wget</goal>
+  	        </goals>
+  	        <configuration>
+              <url>${spin-gate-api.url}</url>
+  	          <outputFileName>swagger.yaml</outputFileName>
+              <outputDirectory>${project.build.directory}</outputDirectory>
+  	        </configuration>
+  	      </execution>
+  	    </executions>
+      </plugin>
+  	  <plugin>
+      	<groupId>org.openapitools</groupId>
+      	<artifactId>openapi-generator-maven-plugin</artifactId>
+        <version>${openapi-generator-maven-plugin.version}</version>
+  	  	<executions>
+          <execution>
+            <phase>generate-sources</phase>
+      	    <goals>
+      	      <goal>generate</goal>
+      	    </goals>
+      	    <configuration>
+              <inputSpec>${spin-gate-api.yaml}</inputSpec>
+              <generatorName>java</generatorName>
+              <skipValidateSpec>true</skipValidateSpec>
+              <output>${spinnaker-api.directory}</output>
+              <configOptions>
+                <parentArtifactId>spinnaker-parent</parentArtifactId>
+                <parentGroupId>${groupId}</parentGroupId>
+                <parentVersion>${spin-gate.version}</parentVersion>
+                <groupId>io.jenkins-ci.plugins</groupId>
+                <artifactId>api</artifactId>
+                <artifactVersion>${spin-gate.version}</artifactVersion>
+              </configOptions>
+      	    </configuration>
+      	  </execution>
+      	</executions>
+      </plugin>   
+      <plugin>                                              
+        <artifactId>maven-invoker-plugin</artifactId>
+        <version>${maven-invoker-plugin.version}</version>
+        <configuration>
+          <pom>${spinnaker-parent.directory}/pom.xml</pom>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>${maven-clean-plugin.version}</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${spinnaker-api.directory}</directory>
+            </fileset>
+            <fileset>
+              <directory>${spinnaker-parent.directory}/target</directory>
+              <includes>
+                <include>**</include>
+              </includes>
+            </fileset>
+            <fileset>                                                     
+              <directory>${spinnaker-parent.directory}/spinnaker/target</directory>
+              <includes>
+                <include>**</include>
+              </includes>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+    </plugins> 
+  </build>
+
+  <developers>
+    <developer>
+      <id>tswanson-cs</id>
+      <name>Thomas C Swanson</name>
+      <email>tswanson-cs@protonmail.com</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/tswanson-cs/spinnaker-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:tswanson-cs/spinnaker-plugin.git</developerConnection>
+    <url>https://github.com/tswanson-cs/spinnaker-plugin</url>
+    <tag>${scmTag}</tag>
+  </scm>
+
+</project>
