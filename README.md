@@ -1,9 +1,9 @@
 
 ::: warning
-This plugin is still a work in progress.  Would be open to any suggestions or discusions 😸
+This plugin is still a work in progress.  Would be open to any suggestions or discussion 😸
 
 # Spinnaker
-The Spinnaker plugin is an api interface into controlling spinnaker.
+The Spinnaker plugin is an api interface used for controlling spinnaker.
 
 ## Getting Started
 
@@ -14,9 +14,9 @@ The Spinnaker plugin is an api interface into controlling spinnaker.
 ![image](https://user-images.githubusercontent.com/9701912/113105163-2376dd80-91b6-11eb-847a-42da2f9e081d.png)
 
 ### pipelineController
-+ The pipeline controller build step used to configure and create pipelines in spinnaker.
++ The pipeline controller build step is used to configure and create pipelines in spinnaker.
  
-> Pipelines are defined as a pipeline json file.  This pipeline json matches the syntax that spinnaker uses inside spin deck.  The pipeline json must contain the **`name`** and **`application`** keys.
+> Pipelines are defined as a pipeline json file.  This pipeline json file matches the syntax that spinnaker uses inside spin-deck.  The pipeline json must contain the **`name`** and **`application`** keys.
 > 
 >>  **For example:**
 >>> This pipeline is named bar and defined for an application foo.
@@ -35,7 +35,7 @@ The Spinnaker plugin is an api interface into controlling spinnaker.
 >> ```pipelineController spinnaker-pipeline.json```
 
 ## For Developers
-The project project has multiple modules.
+The project has multiple modules.
 
 + **spinnaker-generator**
   > Top level wrapper module that contains the maven source for generating api inside spinnaker-parent.
@@ -55,7 +55,7 @@ The project project has multiple modules.
 At a minimum you will need a JVM and Maven installed.
 
 ### Build everything (from root directory)
-Generates and Builds all maven modules (run this the first time you check things out, at least)
+Generates and Builds all maven modules (run this the first time you check things out, must be run at least once)
 
 ```
 $ mvn clean install
