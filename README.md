@@ -94,4 +94,4 @@ These projects would be more suitable for you
 
 ## LICENSE
 
-Licensed under MIT, see [LICENSE](LICENSE.md)
+Licensed under MIT, see [LICENSE](LICENSE)
